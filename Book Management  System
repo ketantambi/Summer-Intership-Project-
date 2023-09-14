@@ -1,0 +1,125 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std ;
+
+
+struct Book {
+    string title;
+    string author;
+    int year;
+};
+
+
+void addBook(vector<Book> &library) {
+    Book book;
+    cout << "Enter book title: ";
+    cin.ignore();
+    getline(cin, book.title);
+    cout << "Enter author name: ";
+    getline(cin, book.author);
+    cout << "Enter publication year: ";
+    cin >> book.year;
+    library.push_back(book);
+    cout << "Book added to the library." << endl;
+}
+
+
+void displayLibrary(const vector<Book> &library) {
+    if (library.empty()) {
+        cout << "The library is empty." << endl;
+        return;
+    }
+
+    cout << "Library Contents:" << endl;
+    for (const Book &book : library) {
+        cout << "Title: " << book.title << endl;
+        cout << "Author: " << book.author << endl;
+        cout << "Year: " << book.year << endl;
+        cout << "-------------------------" << endl;
+    }
+}
+
+
+void searchByTitle(const vector<Book> &library) {
+    string title;
+    cout << "Enter the title to search for: ";
+    cin.ignore();
+    getline(cin, title);
+
+    bool found = false;
+    for (const Book &book : library) {
+        if (book.title.find(title) != string::npos) {
+            cout << "Title: " << book.title << endl;
+            cout << "Author: " << book.author << endl;
+            cout << "Year: " << book.year << endl;
+            cout << "-------------------------" << endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No books found with that title." << endl;
+    }
+}
+
+void searchByAuthor(const vector<Book> &library) {
+    string author;
+    cout << "Enter the author's name to search for: ";
+    cin.ignore();
+    getline(cin, author);
+
+    bool found = false;
+    for (const Book &book : library) {
+        if (book.author.find(author) != string::npos) {
+            cout << "Title: " << book.title << endl;
+            cout << "Author: " << book.author << endl;
+            cout << "Year: " << book.year << endl;
+            cout << "-------------------------" << endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No books found by that author." << endl;
+    }
+}
+
+int main() {
+    vector<Book> library;
+
+    while (true) {
+        cout << "Book Management System" << endl;
+        cout << "1. Add a book" << endl;
+        cout << "2. Display all books" << endl;
+        cout << "3. Search by title" << endl;
+        cout << "4. Search by author" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addBook(library);
+                break;
+            case 2:
+                displayLibrary(library);
+                break;
+            case 3:
+                searchByTitle(library);
+                break;
+            case 4:
+                searchByAuthor(library);
+                break;
+            case 5:
+                cout << "Exiting the program. Goodbye!" << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
